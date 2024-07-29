@@ -10,16 +10,37 @@
 		<%@ include file="/WEB-INF/jsp/common/include/jsInc.jspf" %>
 		<title>Layout1Template</title>
 	</head>
-	<body>
-		<div id="layout1Template">
-			<!-- 헤더 -->
-			<tiles:insertAttribute name="header" />
-			<!-- 본문 -->
-			<div id="contentWrap">
-				<tiles:insertAttribute name="body" />
+	<body id="page-top">
+		<!-- Page Wrapper -->
+		<div id="wrapper">
+			<!--사이드메뉴 -->
+			<tiles:insertAttribute name="snbMenu" />
+			
+			<!-- Content Wrapper -->
+			<div id="content-wrapper" class="d-flex flex-column">
+				
+				<!-- Main Content -->
+            	<div id="content">
+					<tiles:insertAttribute name="header" />
+					<div class="container-fluid">
+						<tiles:insertAttribute name="body" />
+					</div>
+				</div>
+				<!-- //Main Content -->
+				
+				<!-- footer -->
+				<tiles:insertAttribute name="footer" />
 			</div>
-			<!-- 푸터 -->
-			<tiles:insertAttribute name="footer" />
+			
 		</div>
+		<!-- //Page Wrapper -->
+		
+		<!-- Scroll to Top Button-->
+	    <a class="scroll-to-top rounded" href="#page-top">
+	        <i class="fas fa-angle-up"></i>
+	    </a>
+	    
+		<tiles:insertAttribute name="logoutModal" />
+		<%@ include file="/WEB-INF/jsp/common/include/bootstrapSB.jspf" %>
 	</body>
 </html>
