@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "./tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="pop-layout1" template="/WEB-INF/jsp/layouts/templates/PopupLayout1Template.jsp">
+		<put-attribute name="header" 	value="" />
+		<put-attribute name="body" 		value="" />
+		<put-attribute name="footer" 	value="" />
+	</definition>
+	
+	<definition name="*.pop-layout1" extends="pop-layout1">
+	  	<put-attribute name="body"   value="/WEB-INF/jsp/{1}.jsp" />
+	</definition>	
+	
+	<definition name="*/*.pop-layout1" extends="pop-layout1">
+	  	<put-attribute name="body"   value="/WEB-INF/jsp/{1}/{2}.jsp" />
+	</definition>
+	
+	<definition name="*/*/*.pop-layout1" extends="pop-layout1">
+	  	<put-attribute name="body"   value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+	</definition>
+
+	<definition name="*/*/*/*.pop-layout1" extends="pop-layout1">
+	  	<put-attribute name="body"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
+	</definition>
+	
+	<definition name="*/*/*/*/*.pop-layout1" extends="pop-layout1">
+	  	<put-attribute name="body"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}.jsp" />
+	</definition>
+	
+	<definition name="*/*/*/*/*/*.pop-layout1" extends="pop-layout1">
+	  	<put-attribute name="body"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
+	</definition>
+	
+	<definition name="*/*/*/*/*/*/*.pop-layout1" extends="pop-layout1">
+	  	<put-attribute name="body"   value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}/{7}.jsp" />
+	</definition>
+	
+</tiles-definitions>

@@ -1,0 +1,7 @@
+/*datepicker custom : 일요일*/
+.datepicker > .datepicker-days > table > tbody > tr > td:nth-child(1):not(.old):not(.new){color:#e74a3b;border-radius:0;}
+/*datepicker custom : 토요일*/
+.datepicker > .datepicker-days > table > tbody > tr > td:nth-child(7):not(.old):not(.new){color:#4e73df;border-radius:0;}
+/*datepicker custom : old, new*/
+.datepicker > .datepicker-days > table > tbody > tr > td.old ,
+.datepicker > .datepicker-days > table > tbody > tr > td.new{color:#dcdcdc !important;}

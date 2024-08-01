@@ -14,3 +14,16 @@
 <!-- Page level custom scripts -->
 <!-- <script src="/js/demo/chart-area-demo.js"></script> -->
 <!-- <script src="/js/demo/chart-pie-demo.js"></script> -->
+
+<!-- fancybox -->
+<script type="text/javascript" src="/plugin/fancy/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript" src="/plugin/fancy/helpers/jquery.fancybox-buttons.js"></script>
+<link rel="stylesheet" type="text/css" href="/plugin/fancy/jquery.fancybox.css?v=2.1.5" media="screen" />
+<link rel="stylesheet" type="text/css" href="/plugin/fancy/helpers/jquery.fancybox-buttons.css" media="screen" />
+
+<!-- datepicker -->
+<script type="text/javascript" src="/js/test001/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="/js/test001/bootstrap-datepicker.ko.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker.min.css" />
+
+<script type="text/javascript" src="/js/test001/jquery.number.min.js"></script>

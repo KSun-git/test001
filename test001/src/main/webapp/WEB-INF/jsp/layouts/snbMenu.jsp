@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="snbMenu">
 	<!-- Sidebar - Brand -->
 	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/test001/index.do">
 		<div class="sidebar-brand-icon rotate-n-15">
@@ -23,14 +23,15 @@
 	<hr class="sidebar-divider">
 	
 	<!-- Heading -->
-	<div class="sidebar-heading">Interface</div>
+	<div class="sidebar-heading" data-majorcate="01">Interface</div>
+	
 	<!-- Nav Item - Pages Collapse Menu -->
 	<li class="nav-item">
 		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
 			<i class="fas fa-fw fa-cog"></i>
 			<span>Components</span>
 		</a>
-		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#snbMenu">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">Custom Components:</h6>
 				<a class="collapse-item" href="buttons">Buttons</a>
@@ -45,7 +46,7 @@
 			<i class="fas fa-fw fa-wrench"></i>
 			<span>Utilities</span>
 		</a>
-		<div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+		<div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#snbMenu">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">Custom Utilities:</h6>
 				<a class="collapse-item" href="utilities-color">Colors</a>
@@ -60,23 +61,34 @@
 	<hr class="sidebar-divider">
 	
 	<!-- Heading -->
-	<div class="sidebar-heading">Addons</div>
-	<!-- Nav Item - Pages Collapse Menu -->
-	<li class="nav-item">
-		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-			<i class="fas fa-fw fa-folder"></i>
-			<span>Pages</span>
+	<div class="sidebar-heading" data-majorcate="02">Addons</div>
+	
+	<!-- Nav Item - Routin Collapse Menu -->
+	<li class="nav-item" data-middlecate="01">
+		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRoutin" aria-expanded="true" aria-controls="collapseRoutin">
+			<i class="fas fa-fw fa-adjust"></i>
+			<span>Routin</span>
 		</a>
-		<div id="collapsePages" class="collapse" aria-labelledby="headingPages"	data-parent="#accordionSidebar">
+		<div id="collapseRoutin" class="collapse" aria-labelledby="headingRoutin"	data-parent="#snbMenu">
 			<div class="bg-white py-2 collapse-inner rounded">
-				<h6 class="collapse-header">Login Screens:</h6>
-				<a class="collapse-item" href="login">Login</a>
-				<a class="collapse-item" href="register">Register</a>
-				<a class="collapse-item" href="forgot-password">Forgot Password</a>
-				<div class="collapse-divider"></div>
-				<h6 class="collapse-header">Other Pages:</h6>
-				<a class="collapse-item" href="404">404 Page</a>
-				<a class="collapse-item" href="blank">Blank Page</a>
+				<h6 class="collapse-header">Routin Management:</h6>
+				<a class="collapse-item" href="/test001/MedicalRoutin.do">Medical Routin</a>
+				<a class="collapse-item" href="/test001/PersonalRoutin.do">Personal Routin</a>
+			</div>
+		</div>
+	</li>
+	
+	<!-- Nav Item - Finance Collapse Menu -->
+	<li class="nav-item" data-middlecate="02">
+		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFinance" aria-expanded="true" aria-controls="collapseFinance">
+			<i class="fas fa-fw fa-credit-card"></i>
+			<span>Finance</span>
+		</a>
+		<div id="collapseFinance" class="collapse" aria-labelledby="headingFinance"	data-parent="#snbMenu">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<h6 class="collapse-header">Finance Management:</h6>
+				<a class="collapse-item" href="/test001/finance/FixedExpenses.do" data-smallcate="01">Fixed Expenses</a>
+				<a class="collapse-item" href="/test001/finance/f300000Deduction.do" data-smallcate="02">300,000 Deduction</a>
 			</div>
 		</div>
 	</li>

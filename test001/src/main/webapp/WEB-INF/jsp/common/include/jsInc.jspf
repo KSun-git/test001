@@ -1,13 +1,5 @@
 <!-- jquery -->
-<script type="text/javascript" src="/js/test001/jquery-1.11.3.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/plugin/jquery-ui-1.11.3/jquery-ui.min.css" />
-<script type="text/javascript" src="/js/test001/jquery.flow.1.1.min.js"></script>
-<script type="text/javascript" src="/js/test001/jquery.number.min.js" ></script>
-<script type="text/javascript" src="/js/test001/jquery.form.min.js" ></script>
-<script type="text/javascript" src="/js/test001/jquery.bxslider.min.js"></script>
-<script type="text/javascript" src="/js/test001/jquery.maskedinput.js"></script>
-<script type="text/javascript" src="/js/test001/jquery.cookie.js"></script>
-<script type="text/javascript" src="/plugin/jquery-ui-1.11.3/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/plugin/jquery-3.5.0/jquery.min.js"></script>
 
 <!-- Custom fonts for this template-->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -18,3 +10,9 @@
 
 <!-- bootstrap icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+ 
+<!-- Common Util js -->
+<script type="text/javascript" src="/js/test001/CommUtil.js"></script>
+
+<!-- Common css -->
+<link rel="stylesheet" href="/css/CommCss.css">
