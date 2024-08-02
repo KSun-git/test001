@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FinanceDao_SQL">
+	
+	<select id="selectCateGroupList" parameterType="hashMap" resultType="hashMap">
+		SELECT
+			A.CATE
+		FROM
+			TBO_DEDUCTION_LIST A
+		WHERE
+			A.GBN = #{gbn}
+		GROUP BY
+			A.CATE
+	</select>
+	
+	<insert id="insertDeduction" parameterType="hashMap">
+		<![CDATA[
+		INSERT INTO TBO_DEDUCTION_LIST (
+			GBN
+			, CATE
+			, AMOUNT
+			, BIGO
+			, DEDUCTION_DE
+			, REGIST_ID
+			, REGIST_DATE
+		) VALUES (
+			#{gbn}
+			, #{cate}
+			, REPLACE(#{amount}, ',', '')
+			, #{bigo}
+			, REPLACE(#{deductionDe}, '-', '')
+			, #{regist_id}
+			, DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
+		)
+		]]>
+	</insert>
+	
+	<select id="selectDeductionList" parameterType="hashMap" resultType="hashMap">
+		SELECT
+			ROW_NUMBER() OVER(ORDER BY A.DEDUCTION_DE DESC) AS RN
+			, A.NO
+			, A.GBN
+			, A.CATE
+			, A.AMOUNT
+			, A.BIGO
+			, A.DEDUCTION_DE
+			, A.REGIST_ID
+			, A.REGIST_DATE
+			, A.UPDT_ID
+			, A.UPDT_DATE
+		FROM
+			TBO_DEDUCTION_LIST A
+		WHERE 1=1
+			AND A.GBN = #{gbn}
+			AND A.DEDUCTION_DE LIKE CONCAT(#{searchYYYYMM}, '%')
+		ORDER BY A.DEDUCTION_DE DESC
+	</select>
+	
+	<select id="selectDeductionAmount" parameterType="hashMap" resultType="hashMap">
+		SELECT
+			FORMAT(SUM(A.AMOUNT), 0) AS TOTAL_AMOUNT
+			, FORMAT(#{gbn}, 0) AS GBN
+			, ROUND(SUM(A.AMOUNT)/#{gbn}*100, 2) AS TOTAL_PERCENT
+			, COUNT(*) AS TOTAL_CNT
+		FROM
+			TBO_DEDUCTION_LIST A
+		WHERE 1=1
+			AND A.GBN = #{gbn}
+			AND A.DEDUCTION_DE LIKE CONCAT(#{searchYYYYMM}, '%')
+		ORDER BY A.DEDUCTION_DE DESC
+	</select>
+	
+</mapper>

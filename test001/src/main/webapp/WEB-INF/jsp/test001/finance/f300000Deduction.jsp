@@ -41,16 +41,15 @@ $(document).ready(function() {
 
 <%-- deduction 등록 팝업레이어 --%>
 function fn_insertDeductionVwP(){
-	$.url = "<c:url value='/test001/finance/popup/sample.do'/>";
+	$.url = "<c:url value='/test001/finance/popup/insertDeductionVwP.do'/>";
 	$.target = "iframe";
 	$.width = "600";
 	$.height = "420";
 	$.title = "300,000 Deduction"; 
 	$.callbackFn = "";
 	$.formNm = "";
-	$.param1 = "issuedReqstNo="+1;
-	$.param2 = "issuedReqstOdr="+2;
-	popup($.url, $.target, $.width, $.height, $.title , $.callbackFn, $.formNm, $.param1, $.param2);
+	$.param1 = "gbn=300000";
+	popup($.url, $.target, $.width, $.height, $.title , $.callbackFn, $.formNm, $.param1);
 }
 </script>
 <%-- datatables --%>
@@ -70,9 +69,9 @@ function fn_insertDeductionVwP(){
 					<div class="col mr-2">
 						<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Period (Monthly)</div>
 						<div class="h4 mb-0 font-weight-bold text-gray-800">
-							<em>24/07/01</em> ~ <em>24/07/31</em>
+							<em>${firstDate}</em> ~ <em>${lastDate}</em>
 						</div>
-						<a class="small text-secondary" href="#!">Configuration &#10140;</a>
+						<a class="small text-secondary" href="#">Configuration &#10140;</a>
 					</div>
 					<div class="col-auto">
 						<i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -112,16 +111,21 @@ function fn_insertDeductionVwP(){
 						<div class="row no-gutters align-items-center">
 							<div class="col-auto">
 								<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-									<em>50%</em>
+									<em>${deductionAmountMap.TOTAL_PERCENT}%</em>
 								</div>
 							</div>
 							<div class="col">
 								<div class="progress progress-sm mr-2">
-									<div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+									<c:choose>
+										<c:when test="${deductionAmountMap.TOTAL_PERCENT ge 80}"><c:set var="progressBg" value="bg-danger" /></c:when>
+										<c:when test="${deductionAmountMap.TOTAL_PERCENT ge 40}"><c:set var="progressBg" value="bg-warning" /></c:when>
+										<c:otherwise><c:set var="progressBg" value="bg-info" /></c:otherwise>
+									</c:choose>
+									<div class="progress-bar ${progressBg}" role="progressbar" style="width:${deductionAmountMap.TOTAL_PERCENT}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
 						</div>
-						<a class="small text-secondary" href="#!">&nbsp;</a>
+						<a class="small text-secondary text-decoration-none">${deductionAmountMap.TOTAL_AMOUNT} / ${deductionAmountMap.GBN}</a>
 					</div>
 					<div class="col-auto">
 						<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -145,173 +149,26 @@ function fn_insertDeductionVwP(){
 			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-order='[[ 5, "desc" ]]' data-page-length='15'>
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Position</th>
-						<th>Office</th>
-						<th>Age</th>
-						<th>Start date</th>
-						<th>Salary</th>
+						<th>NO</th>
+						<th>Category</th>
+						<th>Amount</th>
+						<th>Deduction Day</th>
+						<th>Bigo</th>
+						<th>Config</th>
 					</tr>
 				</thead>
 				<tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>66</td>
-                                            <td>2009/01/12</td>
-                                            <td>$86,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td>2012/03/29</td>
-                                            <td>$433,060</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>33</td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                        </tr><tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>66</td>
-                                            <td>2009/01/12</td>
-                                            <td>$86,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td>2012/03/29</td>
-                                            <td>$433,060</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>33</td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                        </tr><tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>66</td>
-                                            <td>2009/01/12</td>
-                                            <td>$86,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td>2012/03/29</td>
-                                            <td>$433,060</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>33</td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                        </tr><tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>66</td>
-                                            <td>2009/01/12</td>
-                                            <td>$86,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td>2012/03/29</td>
-                                            <td>$433,060</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>33</td>
-                                            <td>2008/11/28</td>
-                                            <td>$162,700</td>
-                                        </tr>
-                                       </tbody>
+					<c:forEach items="${deductionList}" var="list" varStatus="status">
+						<tr>
+							<td>${list.RN}</td>
+							<td>${list.CATE}</td>
+							<td>${list.AMOUNT}</td>
+							<td>${list.DEDUCTION_DE}</td>
+							<td>${list.BIGO}</td>
+							<td>수정/삭제</td>
+						</tr>
+					</c:forEach>
+                 </tbody>
 			</table>
 		</div>
 	</div>
