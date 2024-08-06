@@ -30,6 +30,7 @@ public class FinanceServiceImpl implements FinanceService {
 	public Map<String, Object> selectDeductionList(Map<String, Object> params) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String ,Object>();
 		resultMap.put("deductionList", financeDao.selectDeductionList(params));
+		resultMap.put("deductionStat", financeDao.selectDeductionStat(params));
 		resultMap.put("deductionAmountMap", financeDao.selectDeductionAmount(params));
 		return resultMap;
 	}

@@ -48,6 +48,7 @@ public class FinanceController {
 		params.put("searchYYYYMM", searchYYYYMM);
 		Map<String, Object> deductionMap = financeService.selectDeductionList(params);
 		model.addAttribute("deductionList", deductionMap.get("deductionList"));
+		model.addAttribute("deductionStat", deductionMap.get("deductionStat"));
 		model.addAttribute("deductionAmountMap", deductionMap.get("deductionAmountMap"));
 		
 		// 시작일, 종료일

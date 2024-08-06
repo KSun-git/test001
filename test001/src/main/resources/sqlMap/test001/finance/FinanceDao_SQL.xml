@@ -37,13 +37,15 @@
 	
 	<select id="selectDeductionList" parameterType="hashMap" resultType="hashMap">
 		SELECT
-			ROW_NUMBER() OVER(ORDER BY A.DEDUCTION_DE DESC) AS RN
+			ROW_NUMBER() OVER(ORDER BY A.DEDUCTION_DE ASC) AS RN
 			, A.NO
 			, A.GBN
 			, A.CATE
 			, A.AMOUNT
+			, FORMAT(A.AMOUNT, 0) AS AMOUNT_VW
 			, A.BIGO
 			, A.DEDUCTION_DE
+			, DATE_FORMAT(A.DEDUCTION_DE, '%Y-%m-%d') AS DEDUCTION_DE_VW
 			, A.REGIST_ID
 			, A.REGIST_DATE
 			, A.UPDT_ID
@@ -56,10 +58,24 @@
 		ORDER BY A.DEDUCTION_DE DESC
 	</select>
 	
+	<select id="selectDeductionStat" parameterType="hashMap" resultType="hashMap">
+		SELECT
+			A.CATE
+			, ROUND( SUM(A.AMOUNT) / (SELECT SUM(k.AMOUNT) FROM TBO_DEDUCTION_LIST k WHERE k.GBN = #{gbn} AND k.DEDUCTION_DE LIKE CONCAT(#{searchYYYYMM}, '%')) *100, 2) AS CATE_STAT
+		FROM
+			TBO_DEDUCTION_LIST A
+		WHERE 1=1
+			AND A.GBN = #{gbn}
+			AND A.DEDUCTION_DE LIKE CONCAT(#{searchYYYYMM}, '%')
+		GROUP BY A.CATE
+		ORDER BY 2 DESC
+	</select>
+	
 	<select id="selectDeductionAmount" parameterType="hashMap" resultType="hashMap">
 		SELECT
 			FORMAT(SUM(A.AMOUNT), 0) AS TOTAL_AMOUNT
 			, FORMAT(#{gbn}, 0) AS GBN
+			, FORMAT(#{gbn} - SUM(A.AMOUNT), 0) AS BALANCE
 			, ROUND(SUM(A.AMOUNT)/#{gbn}*100, 2) AS TOTAL_PERCENT
 			, COUNT(*) AS TOTAL_CNT
 		FROM

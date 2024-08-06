@@ -25,6 +25,10 @@ public class FinanceDao {
 		return sqlSession.selectList("FinanceDao_SQL.selectDeductionList", params);
 	}
 	
+	public List<Map<String, Object>> selectDeductionStat(Map<String, Object> params) throws Exception {
+		return sqlSession.selectList("FinanceDao_SQL.selectDeductionStat", params);
+	}
+	
 	public Map<String, Object> selectDeductionAmount(Map<String, Object> params) throws Exception {
 		return sqlSession.selectOne("FinanceDao_SQL.selectDeductionAmount", params);
 	}
