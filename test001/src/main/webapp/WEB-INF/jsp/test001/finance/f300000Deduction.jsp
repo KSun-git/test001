@@ -113,6 +113,26 @@ function fn_insertDeductionVwP(){
 	$.param1 = "gbn=300000";
 	popup($.url, $.target, $.width, $.height, $.title , $.callbackFn, $.formNm, $.param1);
 }
+
+<%-- deduction 조회 팝업레이어 --%>
+function fn_selectDeductionMonthVwP(){
+	$.url = "<c:url value='/test001/finance/popup/selectDeductionMonthVwP.do'/>";
+	$.target = "iframe";
+	$.width = "400";
+	$.height = "380";
+	$.title = "300,000 Deduction"; 
+	$.callbackFn = "";
+	$.formNm = "";
+	$.param1 = "searchYYYYMM="+document.searchFrm.searchYYYYMM.value;
+	popup($.url, $.target, $.width, $.height, $.title , $.callbackFn, $.formNm, $.param1);
+}
+
+<%-- deduction 조회 --%>
+function fn_selectDeductionMonth(yyyymm){
+	document.searchFrm.searchYYYYMM.value = yyyymm;
+	document.searchFrm.action = "/test001/finance/f300000Deduction.do";
+	document.searchFrm.submit();
+}
 </script>
 
 <%-- datatables --%>
@@ -126,6 +146,11 @@ function fn_insertDeductionVwP(){
 <h3 class="mb-0 mt-5 text-gray-800">300,000-Deduction</h3>
 <hr class="mt-2 mb-4">
 
+<!-- searchFrm -->
+<form id="searchFrm" name="searchFrm" method="post" autocomplete="off">
+	<input type="hidden" name="searchYYYYMM" value="${params.searchYYYYMM}" />
+</form>
+
 <div class="row">
 	<!-- Period (Monthly) Card -->
 	<div class="col-lg-4 mb-4">
@@ -137,7 +162,7 @@ function fn_insertDeductionVwP(){
 						<div class="h4 mb-0 font-weight-bold text-gray-800">
 							<em>${firstDate}</em> ~ <em>${lastDate}</em>
 						</div>
-						<a class="small text-secondary" href="#">Configuration &#10140;</a>
+						<a class="small text-secondary" href="javascript:fn_selectDeductionMonthVwP()">Configuration &#10140;</a>
 					</div>
 					<div class="col-auto">
 						<i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -156,7 +181,9 @@ function fn_insertDeductionVwP(){
 						<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Deduction</div>
 						<div class="h4 mb-0 font-weight-bold text-gray-800">
 							&#8361;<em>${deductionAmountMap.TOTAL_AMOUNT}</em>
-							<span class="text-muted" style="font-size:14px;">&#40;${deductionAmountMap.BALANCE}&#41;</span>
+							<c:if test="${not empty deductionAmountMap.BALANCE}">
+								<span class="text-muted" style="font-size:14px;">&#40;${deductionAmountMap.BALANCE}&#41;</span>
+							</c:if>
 						</div>
 						<a class="small text-secondary" href="javascript:fn_insertDeductionVwP()">Registration &#10140;</a>
 					</div>
@@ -242,7 +269,7 @@ function fn_insertDeductionVwP(){
 	<!-- //Deduction List -->
 	<!-- Deduction Stat -->
 	<div class="col-lg-4 mb-4">
-		<div class="card shadow border-left-secondary shadow h-100">
+		<div class="card shadow border-left-secondary shadow">
 			<div class="card-header py-3">
 				<h6 class="m-0 font-weight-bold text-primary">Deduction Stat</h6>
 			</div>

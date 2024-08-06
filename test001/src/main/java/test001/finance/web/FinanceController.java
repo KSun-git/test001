@@ -66,15 +66,18 @@ public class FinanceController {
 		return "test001/finance/f300000Deduction.layout1"; 
 	}
 	
+	@RequestMapping("/finance/popup/selectDeductionMonthVwP.do")
+	public String selectDeductionMonthVwP(@RequestParam Map<String, Object> params, ModelMap model) throws Exception {
+		model.addAttribute("params", params);
+		return "test001/finance/popup/selectDeductionMonthVwP.pop-layout1"; 
+	}
+	
 	@RequestMapping("/finance/popup/insertDeductionVwP.do")
-	public String insertDeductionVwP(@RequestParam Map<String, Object> params,
-												@RequestParam(value="menuId", required = false, defaultValue = "020202")String menuId,
-												ModelMap model) throws Exception {
+	public String insertDeductionVwP(@RequestParam Map<String, Object> params, ModelMap model) throws Exception {
 		// 카테고리 그룹 리스트 조회
 		model.addAttribute("cateGroupList", financeService.selectCateGroupList(params));
 		
 		model.addAttribute("gbn", params.get("gbn"));
-		model.addAttribute("menuId", menuId);
 		return "test001/finance/popup/insertDeductionVwP.pop-layout1"; 
 	}
 	
