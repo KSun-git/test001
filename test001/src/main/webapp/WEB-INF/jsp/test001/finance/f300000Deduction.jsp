@@ -28,7 +28,7 @@ $(document).ready(function() {
 	});
 	
 	<%-- 데이터테이블 적용 --%>
-	let table = new DataTable('#dataTable', {
+	let dataTable = new DataTable('#dataTable', {
 		responsive: true,
 		paging: true,
 		searching: true,
@@ -40,7 +40,22 @@ $(document).ready(function() {
 			{className: "text-center", width: 180, targets: 1},
 			{className: "text-right", width: 200, targets: [2,3]},
 			{className: "text-right", targets: 4},
-		]
+		],
+		footerCallback: function (tr, data, start, end, display) {
+			let api = this.api();
+			let intVal = function (i) {
+				return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;	
+			};
+			
+			// Total over all pages
+			total = api.column(2).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+			
+			// Total over this page
+	        pageTotal = api.column(2, { page: 'current' }).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+			
+	     	// Update footer
+	     	api.column(1).footer().innerHTML = '&#8361;' + addThousandSeparatorCommas(pageTotal) + ' (&#8361;' + addThousandSeparatorCommas(total) + ' total)';
+		}
 	});
 	
 	<%-- 도넛차트 적용 --%>
@@ -50,7 +65,7 @@ $(document).ready(function() {
 		let stat_values = new Array();
 		<c:forEach items="${deductionStat}" var="list" varStatus="status">
 			stat_labels[${status.index}] = "${list.CATE}";
-			stat_values[${status.index}] = Number("${list.CATE_STAT}");
+			stat_values[${status.index}] = Number("${list.CATE_AMOUNT}");
 		</c:forEach>
 		
 		const bgColors = ['#FF8000','#FFFF00','#00FF00','#00FFFF','#0000FF','#7F00FF','#FF00FF','#FF007F'];
@@ -72,13 +87,20 @@ $(document).ready(function() {
 				maintainAspectRatio: false,
 				tooltips: {
 					backgroundColor: "rgb(255,255,255)",
-					bodyFontColor: "#858796",
-					borderColor: '#dddfeb',
+					bodyFontColor: "#FF0000",
+					borderColor: '#E74A3B',
 					borderWidth: 1,
 					xPadding: 15,
 					yPadding: 15,
 					displayColors: false,
 					caretPadding: 10,
+					callbacks: {
+						label: function(tooltipItem, chart) {
+							var datasetLabel = chart.labels[tooltipItem.index] || '';
+							var datasetValue = chart.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || '';
+							return datasetLabel + ": " + addThousandSeparatorCommas(datasetValue);
+						}
+					}
 				},
 				legend: {display: false},
 				cutoutPercentage: 80
@@ -86,20 +108,11 @@ $(document).ready(function() {
 		});
 		
 		for(let i=0; i<stat_labels.length; i++){
-			let cateNm = stat_labels[i];
-			let color = bgColors[i];
-			fn_insertDonutElement(color, cateNm);
+			$('#donutSummary > tbody > tr > th > i').eq(i).css("color", bgColors[i]);
 		}
 	}
 	
 });
-
-<%-- deduction stat 요소 생성 --%>
-function fn_insertDonutElement(color, content){
-	let strHtml = '';
-	strHtml += '<span class="mr-2"><i class="fas fa-circle" style="color:'+color+'"></i>' + content + '</span>';
-	$('#donutList').append(strHtml);
-}
 
 <%-- deduction 등록 팝업레이어 --%>
 function fn_insertDeductionVwP(){
@@ -261,6 +274,11 @@ function fn_selectDeductionMonth(yyyymm){
 								</tr>
 							</c:forEach>
 		                 </tbody>
+		                 <tfoot>
+		                 	<tr>
+		                 		<th colspan="5" class="text-center">Total</th>
+		                 	</tr>
+		                 </tfoot>
 					</table>
 				</div>
 			</div>
@@ -277,7 +295,19 @@ function fn_selectDeductionMonth(yyyymm){
 				 <div class="chart-pie pt-4 pb-2">
 				 	<canvas id="donutChart"></canvas>
 				 </div>
-				 <div id="donutList" class="mt-4 text-center small"></div>
+				
+				<div class="d-flex justify-content-center overflow-auto">
+					<table id="donutSummary">
+						<tbody>
+							<c:forEach items="${deductionStat}" var="list" varStatus="status">
+								<tr>
+									<th><i class="fas fa-square"></i> ${list.CATE}</th>
+									<td><span class="px-2">${list.CATE_AMOUNT_VW}</span><em class="text-muted font-weight-lighter">&#40;${list.CATE_STAT}&#37;&#41;</em></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

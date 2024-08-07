@@ -61,6 +61,8 @@
 	<select id="selectDeductionStat" parameterType="hashMap" resultType="hashMap">
 		SELECT
 			A.CATE
+			, SUM(A.AMOUNT) AS CATE_AMOUNT
+			, FORMAT(SUM(A.AMOUNT), 0) AS CATE_AMOUNT_VW
 			, ROUND( SUM(A.AMOUNT) / (SELECT SUM(k.AMOUNT) FROM TBO_DEDUCTION_LIST k WHERE k.GBN = #{gbn} AND k.DEDUCTION_DE LIKE CONCAT(#{searchYYYYMM}, '%')) *100, 2) AS CATE_STAT
 		FROM
 			TBO_DEDUCTION_LIST A
