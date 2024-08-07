@@ -1,6 +1,7 @@
+var $= jQuery.noConflict();
+
 /* 팝업호출함수 */
 var popup = function() {
-	var $= jQuery.noConflict();
 	var href = '';
 	var type = '';
 	var width = '';
@@ -140,7 +141,6 @@ var popup = function() {
 	}
 }
 var popupClose = function() {
-	var $= jQuery.noConflict();
 	$.fancybox.close(false);
 }
 
@@ -205,5 +205,14 @@ function toStringByFormatting(source, delimiter = '-') {
 }
 
 function addThousandSeparatorCommas(num) {
-	num.value = $.number(num.value);
+	switch(typeof(num)){
+		case "object" : 
+			return num.value = $.number(num.value);
+		case "number" :
+			return $.number(num);
+		case "string" :
+			return $.number(Number(num));
+		default:
+			return num;
+	}
 }
