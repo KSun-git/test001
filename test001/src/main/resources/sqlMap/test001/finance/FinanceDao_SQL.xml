@@ -36,26 +36,29 @@
 	</insert>
 	
 	<select id="selectDeductionList" parameterType="hashMap" resultType="hashMap">
-		SELECT
-			ROW_NUMBER() OVER(ORDER BY A.DEDUCTION_DE ASC) AS RN
-			, A.NO
-			, A.GBN
-			, A.CATE
-			, A.AMOUNT
-			, FORMAT(A.AMOUNT, 0) AS AMOUNT_VW
-			, A.BIGO
-			, A.DEDUCTION_DE
-			, DATE_FORMAT(A.DEDUCTION_DE, '%Y-%m-%d') AS DEDUCTION_DE_VW
-			, A.REGIST_ID
-			, A.REGIST_DATE
-			, A.UPDT_ID
-			, A.UPDT_DATE
-		FROM
-			TBO_DEDUCTION_LIST A
-		WHERE 1=1
-			AND A.GBN = #{gbn}
-			AND A.DEDUCTION_DE LIKE CONCAT(#{searchYYYYMM}, '%')
-		ORDER BY A.DEDUCTION_DE DESC
+		SELECT TB.* FROM (
+			SELECT
+				CONVERT(@rownum := @rownum+1 , INTEGER) AS RN
+				, A.NO
+				, A.GBN
+				, A.CATE
+				, A.AMOUNT
+				, FORMAT(A.AMOUNT, 0) AS AMOUNT_VW
+				, A.BIGO
+				, A.DEDUCTION_DE
+				, DATE_FORMAT(A.DEDUCTION_DE, '%Y-%m-%d') AS DEDUCTION_DE_VW
+				, A.REGIST_ID
+				, A.REGIST_DATE
+				, A.UPDT_ID
+				, A.UPDT_DATE
+			FROM
+				TBO_DEDUCTION_LIST A, (SELECT @rownum:=0) TMP
+			WHERE 1=1
+				AND A.GBN = #{gbn}
+				AND A.DEDUCTION_DE LIKE CONCAT(#{searchYYYYMM}, '%')
+			ORDER BY A.DEDUCTION_DE ASC
+		) TB
+		ORDER BY RN DESC
 	</select>
 	
 	<select id="selectDeductionStat" parameterType="hashMap" resultType="hashMap">
