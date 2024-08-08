@@ -144,6 +144,25 @@ var popupClose = function() {
 	$.fancybox.close(false);
 }
 
+/* 모달호출함수 */
+var modalRoad = function(target, href, params) {
+	$ele = $('#'+target);
+	if($ele.length == 1){
+		$.ajax({
+			url: href,
+			type: 'post',
+			timeout: 10000,
+			data: params,
+			async: false,
+			success: function(result){
+				$ele.find('.modal-content').empty().html(result);
+			},
+			error: function (request, status, error) {
+				$ele.find('.modal-content').empty().html('<div class="container-fluid text-center">에러가 발생하였습니다.' + request.status + '(' + error + ')</div>');
+			}
+		});
+	}
+}
 
 /* datepicker */
 $(function() {
