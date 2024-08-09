@@ -22,7 +22,7 @@
 	<!-- sqlSessionFactory:reroadable -->
 	<bean id="sqlSession" class="spring.mybatis.RefreshableSqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource-${Globals.DbType}" />
-		<property name="mapperLocations" value="classpath:/sqlMap/**/*_SQL.xml"></property>
+		<property name="mapperLocations" value="classpath:/sqlMap/test001/${Globals.DbType}/**/*_SQL.xml"></property>
 		<property name="interval" value="500"></property>
 	</bean>
 	

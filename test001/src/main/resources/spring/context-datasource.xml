@@ -22,4 +22,15 @@
 		<property name="timeBetweenEvictionRunsMillis" value="1800000" /><!-- 30분 -->
 	</bean>
 	
+	<!-- dataSource(maria) -->
+	<bean id="dataSource-maria" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${Globals.DbDriverClassName}"/>
+		<property name="url" value="${Globals.DbUrl}" />
+		<property name="username" value="${Globals.DbUserName}" />
+		<property name="password" value="${Globals.DbUserPassword}" />
+		<property name="validationQuery" value="select 1 from dual" />
+		<property name="testWhileIdle" value="true" />
+		<property name="timeBetweenEvictionRunsMillis" value="1800000" /><!-- 30분 -->
+	</bean>
+	
 </beans>
