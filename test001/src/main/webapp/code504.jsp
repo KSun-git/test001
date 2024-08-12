@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>404 Not Found</title>
+    <title>504 Gateway Timeout</title>
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -26,9 +26,9 @@
 					<div class="vh-100 d-flex justify-content-center align-items-center">
 						<div class="col-lg-6">
 							<div class="text-center">
-								<img class="img-fluid p-3" src="/img/error/404-error-with-a-cute-animal.svg" alt="code404" />
-								<div class="lead text-gray-800">404(Not Found)</div>
-								<p class="lead">This requested URL was not found on this server.</p>
+								<img class="img-fluid p-3" src="/img/error/504-error-gateway-timeout.svg" alt="code504" />
+								<div class="lead text-gray-800">504(Gateway Timeout)</div>
+								<p class="lead">The server encountered a temporary error and could not complete your request.</p>
 								<a class="text-arrow-icon" href="/">&#129028; Return to home</a>
 							</div>
 						</div>
