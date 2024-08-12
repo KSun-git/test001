@@ -1,5 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
+	const device = '${device}';
 	const menuId = '${menuId}';
 	const majorMenuId = menuId.substr(0,2);
 	const middleMenuId = menuId.substr(2,2);
@@ -21,42 +22,47 @@ $(document).ready(function() {
 			$(this).find('.collapse-item').each(function(){
 				if($(this).data("smallcate") == smallMenuId){
 					$(this).addClass("text-warning font-weight-bold");
-					$(this).closest('.collapse').addClass("show");
+					if(device == 'PC') {$(this).closest('.collapse').addClass("show");}
 				}
 			});
 		}
 	});
 	
 	<%-- 데이터테이블 적용 --%>
-	let dataTable = new DataTable('#dataTable', {
-		responsive: true,
-		paging: true,
-		searching: true,
-		ordering:  true,
-		lengthChange: false,
-		info: false,
-		columnDefs:[
-			{className: "text-center", width: 80, targets: 0},
-			{className: "text-center", width: 180, targets: 1},
-			{className: "text-right", width: 200, targets: [2,3]},
-			{className: "text-right", targets: 4},
-		],
-		footerCallback: function (tr, data, start, end, display) {
-			let api = this.api();
-			let intVal = function (i) {
-				return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;	
-			};
-			
-			// Total over all pages
-			total = api.column(2).data().reduce((a, b) => intVal(a) + intVal(b), 0);
-			
-			// Total over this page
-	        pageTotal = api.column(2, { page: 'current' }).data().reduce((a, b) => intVal(a) + intVal(b), 0);
-			
-	     	// Update footer
-	     	api.column(1).footer().innerHTML = '&#8361;' + addThousandSeparatorCommas(pageTotal) + ' (&#8361;' + addThousandSeparatorCommas(total) + ' total)';
-		}
-	});
+	if($('#dataTable').length > 0) {
+		let columnDefs_PC = [{className: "text-center", width: 80, targets: 0},
+										{className: "text-center", width: 180, targets: 1},
+										{className: "text-right", width: 200, targets: [2,3]},
+										{className: "text-right", targets: 4}];
+		let columnDefs_MOBILE = [{className: "text-center", width: 160, targets: 0},
+											{className: "text-right", width: 180, targets: [1,2]}];
+		let dataTable = new DataTable('#dataTable', {
+			responsive: true,
+			paging: true,
+			searching: true,
+			ordering:  true,
+			lengthChange: false,
+			info: false,
+			columnDefs: (device == 'PC') ? columnDefs_PC : columnDefs_MOBILE ,
+			footerCallback: function (tr, data, start, end, display) {
+				let api = this.api();
+				let intVal = function (i) {
+					return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;	
+				};
+				
+				let amount_column = (device == 'PC') ? 2 : 1 ;
+				
+				// Total over all pages
+				total = api.column(amount_column).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+				
+				// Total over this page
+		        pageTotal = api.column(amount_column, { page: 'current' }).data().reduce((a, b) => intVal(a) + intVal(b), 0);
+				
+		     	// Update footer
+		     	api.column(1).footer().innerHTML = '&#8361;' + addThousandSeparatorCommas(pageTotal) + ' (&#8361;' + addThousandSeparatorCommas(total) + ' total)';
+			}
+		});
+	}
 	
 	<%-- 도넛차트 적용 --%>
 	const data_cnt = Number("${fn:length(deductionStat)}");
@@ -125,6 +131,15 @@ function fn_insertDeductionVwP(){
 	$.formNm = "";
 	$.param1 = "gbn=300000";
 	popup($.url, $.target, $.width, $.height, $.title , $.callbackFn, $.formNm, $.param1);
+}
+
+<%-- deduction 등록 모달레이어 --%>
+function fn_insertDeductionVwM(){
+	var url = "<c:url value='/test001/finance/modal/insertDeductionVwM.do'/>";
+	var target = "insertDeductionVwM";
+	var params = {};
+	params["gbn"] = '300000';
+	modalRoad(target, url, params);
 }
 
 <%-- deduction 조회 팝업레이어 --%>
@@ -198,7 +213,15 @@ function fn_selectDeductionMonth(yyyymm){
 								<span class="text-muted" style="font-size:14px;">&#40;${deductionAmountMap.BALANCE}&#41;</span>
 							</c:if>
 						</div>
-						<a class="small text-secondary" href="javascript:fn_insertDeductionVwP()">Registration &#10140;</a>
+						<c:choose>
+							<c:when test="${device eq 'PC' }">
+								<a class="small text-secondary" href="javascript:fn_insertDeductionVwP()">Registration &#10140;</a>
+							</c:when>
+							<c:when test="${device eq 'MOBILE' }">
+								<button type="button" class="btn btn-sm text-secondary p-0" data-toggle="modal" data-target="#insertDeductionVwM" onclick="fn_insertDeductionVwM()">Registration &#10140;</button>
+							</c:when>
+							<c:otherwise>${device}</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="col-auto">
 						<i class="fas fa-won-sign fa-2x text-gray-300"></i>
@@ -253,33 +276,63 @@ function fn_selectDeductionMonth(yyyymm){
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-order='[[ 0, "desc" ]]' data-page-length='15'>
-						<thead>
-							<tr>
-								<th>NO</th>
-								<th>Category</th>
-								<th>Amount</th>
-								<th>Deduction Day</th>
-								<th>Bigo</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${deductionList}" var="list" varStatus="status">
-								<tr>
-									<td>${list.RN}</td>
-									<td>${list.CATE}</td>
-									<td>${list.AMOUNT_VW}</td>
-									<td>${list.DEDUCTION_DE_VW}</td>
-									<td>${list.BIGO}</td>
-								</tr>
-							</c:forEach>
-		                 </tbody>
-		                 <tfoot>
-		                 	<tr>
-		                 		<th colspan="5" class="text-center">Total</th>
-		                 	</tr>
-		                 </tfoot>
-					</table>
+					<c:choose>
+						<c:when test="${device eq 'PC' }">
+							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-order='[[ 0, "desc" ]]' data-page-length='15'>
+								<thead>
+									<tr>
+										<th>NO</th>
+										<th>Category</th>
+										<th>Amount</th>
+										<th>Deduction Day</th>
+										<th>Bigo</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${deductionList}" var="list" varStatus="status">
+										<tr>
+											<td>${list.RN}</td>
+											<td>${list.CATE}</td>
+											<td>${list.AMOUNT_VW}</td>
+											<td>${list.DEDUCTION_DE_VW}</td>
+											<td>${list.BIGO}</td>
+										</tr>
+									</c:forEach>
+				                 </tbody>
+				                 <tfoot>
+				                 	<tr>
+				                 		<th colspan="5" class="text-center">Total</th>
+				                 	</tr>
+				                 </tfoot>
+							</table>
+						</c:when>
+						<c:when test="${device eq 'MOBILE' }">
+							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-order='[[ 2, "desc" ]]' data-page-length='5'>
+								<thead>
+									<tr>
+										<th>Category</th>
+										<th>Amount</th>
+										<th>Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${deductionList}" var="list" varStatus="status">
+										<tr>
+											<td>${list.CATE}</td>
+											<td>${list.AMOUNT_VW}</td>
+											<td>${fn:substring(list.DEDUCTION_DE_VW, 5,10)}</td>
+										</tr>
+									</c:forEach>
+				                 </tbody>
+				                 <tfoot>
+				                 	<tr>
+				                 		<th colspan="3" class="text-center">Total</th>
+				                 	</tr>
+				                 </tfoot>
+							</table>
+						</c:when>
+						<c:otherwise>${device}</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
@@ -313,3 +366,8 @@ function fn_selectDeductionMonth(yyyymm){
 	</div>
 	<!-- //Deduction Stat -->
 </div>
+
+<!-- modal -->
+<c:import url="/test001/layoutModal.do" charEncoding="utf-8">
+	<c:param name="targetId" value="insertDeductionVwM" />
+</c:import>

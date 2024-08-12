@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,14 @@ public class FinanceController {
 	public String f300000Deduction(@RequestParam Map<String, Object> params,
 												@RequestParam(value="menuId", required = false, defaultValue = "020202") String menuId,
 												@RequestParam(value="searchYYYYMM", required = false, defaultValue = "") String searchYYYYMM,
-												ModelMap model) throws Exception {
+												HttpServletRequest request, ModelMap model) throws Exception {
+		String userAgent = request.getHeader("User-Agent").toUpperCase();
+		if(userAgent.indexOf("MOBI") > -1) {
+			model.addAttribute("device", "MOBILE");
+		} else {
+			model.addAttribute("device", "PC");
+		}
+		
 		// 기본 검색대상
 		if(searchYYYYMM.equals("")) {
 			Date nowDate = new Date();
@@ -79,6 +87,15 @@ public class FinanceController {
 		
 		model.addAttribute("gbn", params.get("gbn"));
 		return "test001/finance/popup/insertDeductionVwP.pop-layout1"; 
+	}
+	
+	@RequestMapping("/finance/modal/insertDeductionVwM.do")
+	public String insertDeductionVwM(@RequestParam Map<String, Object> params, ModelMap model) throws Exception {
+		// 카테고리 그룹 리스트 조회
+		model.addAttribute("cateGroupList", financeService.selectCateGroupList(params));
+		
+		model.addAttribute("gbn", params.get("gbn"));
+		return "test001/finance/modal/insertDeductionVwM";
 	}
 	
 	@ResponseBody

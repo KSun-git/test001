@@ -5,3 +5,6 @@
 /*datepicker custom : old, new*/
 .datepicker > .datepicker-days > table > tbody > tr > td.old ,
 .datepicker > .datepicker-days > table > tbody > tr > td.new{color:#dcdcdc !important;}
+
+#layoutError{display: flex;flex-direction: column;min-height: 100vh;}
+#layoutError #layoutError_content {min-width: 0;flex-grow: 1;}
