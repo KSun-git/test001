@@ -6,5 +6,11 @@
 .datepicker > .datepicker-days > table > tbody > tr > td.old ,
 .datepicker > .datepicker-days > table > tbody > tr > td.new{color:#dcdcdc !important;}
 
+/*에러페이지 레이아웃*/
 #layoutError{display: flex;flex-direction: column;min-height: 100vh;}
 #layoutError #layoutError_content {min-width: 0;flex-grow: 1;}
+
+/*width*/
+.w-30{width:30% !important;}
+.w-33{width:33% !important;}
+.w-99{width:99% !important;}

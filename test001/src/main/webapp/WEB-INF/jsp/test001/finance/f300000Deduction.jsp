@@ -155,6 +155,15 @@ function fn_selectDeductionMonthVwP(){
 	popup($.url, $.target, $.width, $.height, $.title , $.callbackFn, $.formNm, $.param1);
 }
 
+<%-- deduction 조회 모달레이어 --%>
+function fn_selectDeductionMonthVwP(){
+	var url = "<c:url value='/test001/finance/modal/selectDeductionMonthVwM.do'/>";
+	var target = "selectDeductionVwM";
+	var params = {};
+	params["searchYYYYMM"] = document.searchFrm.searchYYYYMM.value;
+	modalRoad(target, url, params);
+}
+
 <%-- deduction 조회 --%>
 function fn_selectDeductionMonth(yyyymm){
 	document.searchFrm.searchYYYYMM.value = yyyymm;
@@ -190,7 +199,15 @@ function fn_selectDeductionMonth(yyyymm){
 						<div class="h4 mb-0 font-weight-bold text-gray-800">
 							<em>${firstDate}</em> ~ <em>${lastDate}</em>
 						</div>
-						<a class="small text-secondary" href="javascript:fn_selectDeductionMonthVwP()">Configuration &#10140;</a>
+						<c:choose>
+							<c:when test="${device eq 'PC' }">
+								<a class="small text-secondary" href="javascript:fn_selectDeductionMonthVwP()">Configuration &#10140;</a>
+							</c:when>
+							<c:when test="${device eq 'MOBILE' }">
+								<button type="button" class="btn btn-sm text-secondary p-0" data-toggle="modal" data-target="#selectDeductionVwM" onclick="fn_selectDeductionMonthVwP()">Configuration &#10140;</button>
+							</c:when>
+							<c:otherwise>${device}</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="col-auto">
 						<i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -370,4 +387,7 @@ function fn_selectDeductionMonth(yyyymm){
 <!-- modal -->
 <c:import url="/test001/layoutModal.do" charEncoding="utf-8">
 	<c:param name="targetId" value="insertDeductionVwM" />
+</c:import>
+<c:import url="/test001/layoutModal.do" charEncoding="utf-8">
+	<c:param name="targetId" value="selectDeductionVwM" />
 </c:import>

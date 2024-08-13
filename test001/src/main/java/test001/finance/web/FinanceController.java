@@ -80,6 +80,12 @@ public class FinanceController {
 		return "test001/finance/popup/selectDeductionMonthVwP.pop-layout1"; 
 	}
 	
+	@RequestMapping("/finance/modal/selectDeductionMonthVwM.do")
+	public String selectDeductionMonthVwM(@RequestParam Map<String, Object> params, ModelMap model) throws Exception {
+		model.addAttribute("params", params);
+		return "test001/finance/modal/selectDeductionMonthVwM"; 
+	}
+	
 	@RequestMapping("/finance/popup/insertDeductionVwP.do")
 	public String insertDeductionVwP(@RequestParam Map<String, Object> params, ModelMap model) throws Exception {
 		// 카테고리 그룹 리스트 조회
