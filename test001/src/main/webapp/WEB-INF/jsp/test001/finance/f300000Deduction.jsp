@@ -156,11 +156,35 @@ function fn_selectDeductionMonthVwP(){
 }
 
 <%-- deduction 조회 모달레이어 --%>
-function fn_selectDeductionMonthVwP(){
+function fn_selectDeductionMonthVwM(){
 	var url = "<c:url value='/test001/finance/modal/selectDeductionMonthVwM.do'/>";
 	var target = "selectDeductionVwM";
 	var params = {};
 	params["searchYYYYMM"] = document.searchFrm.searchYYYYMM.value;
+	modalRoad(target, url, params);
+}
+
+<%-- deduction 수정 팝업레이어 --%>
+function fn_updateDeductionVwP(no){
+	$.url = "<c:url value='/test001/finance/popup/updateDeductionVwP.do'/>";
+	$.target = "iframe";
+	$.width = "600";
+	$.height = "420";
+	$.title = "300,000 Deduction"; 
+	$.callbackFn = "";
+	$.formNm = "";
+	$.param1 = "gbn=300000";
+	$.param2 = "no="+no;
+	popup($.url, $.target, $.width, $.height, $.title , $.callbackFn, $.formNm, $.param1, $.param2);
+}
+
+<%-- deduction 수정 모달레이어 --%>
+function fn_updateDeductionVwM(no){
+	var url = "<c:url value='/test001/finance/modal/updateDeductionVwM.do'/>";
+	var target = "updateDeductionVwM";
+	var params = {};
+	params["gbn"] = '300000';
+	params["no"] = no;
 	modalRoad(target, url, params);
 }
 
@@ -204,7 +228,7 @@ function fn_selectDeductionMonth(yyyymm){
 								<a class="small text-secondary" href="javascript:fn_selectDeductionMonthVwP()">Configuration &#10140;</a>
 							</c:when>
 							<c:when test="${device eq 'MOBILE' }">
-								<button type="button" class="btn btn-sm text-secondary p-0" data-toggle="modal" data-target="#selectDeductionVwM" onclick="fn_selectDeductionMonthVwP()">Configuration &#10140;</button>
+								<button type="button" class="btn btn-sm text-secondary p-0" data-toggle="modal" data-target="#selectDeductionVwM" onclick="fn_selectDeductionMonthVwM()">Configuration &#10140;</button>
 							</c:when>
 							<c:otherwise>${device}</c:otherwise>
 						</c:choose>
@@ -295,7 +319,7 @@ function fn_selectDeductionMonth(yyyymm){
 				<div class="table-responsive">
 					<c:choose>
 						<c:when test="${device eq 'PC' }">
-							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-order='[[ 0, "desc" ]]' data-page-length='15'>
+							<table class="table table-bordered hover" id="dataTable" width="100%" cellspacing="0" data-order='[[ 0, "desc" ]]' data-page-length='15'>
 								<thead>
 									<tr>
 										<th>NO</th>
@@ -307,7 +331,7 @@ function fn_selectDeductionMonth(yyyymm){
 								</thead>
 								<tbody>
 									<c:forEach items="${deductionList}" var="list" varStatus="status">
-										<tr>
+										<tr onclick="fn_updateDeductionVwP('${list.NO}')">
 											<td>${list.RN}</td>
 											<td>${list.CATE}</td>
 											<td>${list.AMOUNT_VW}</td>
@@ -324,7 +348,7 @@ function fn_selectDeductionMonth(yyyymm){
 							</table>
 						</c:when>
 						<c:when test="${device eq 'MOBILE' }">
-							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-order='[[ 2, "desc" ]]' data-page-length='5'>
+							<table class="table table-bordered hover" id="dataTable" width="100%" cellspacing="0" data-order='[[ 2, "desc" ]]' data-page-length='5'>
 								<thead>
 									<tr>
 										<th>Category</th>
@@ -334,7 +358,7 @@ function fn_selectDeductionMonth(yyyymm){
 								</thead>
 								<tbody>
 									<c:forEach items="${deductionList}" var="list" varStatus="status">
-										<tr>
+										<tr data-toggle="modal" data-target="#updateDeductionVwM" onclick="fn_updateDeductionVwM('${list.NO}')">
 											<td>${list.CATE}</td>
 											<td>${list.AMOUNT_VW}</td>
 											<td>${fn:substring(list.DEDUCTION_DE_VW, 5,10)}</td>
@@ -390,4 +414,7 @@ function fn_selectDeductionMonth(yyyymm){
 </c:import>
 <c:import url="/test001/layoutModal.do" charEncoding="utf-8">
 	<c:param name="targetId" value="selectDeductionVwM" />
+</c:import>
+<c:import url="/test001/layoutModal.do" charEncoding="utf-8">
+	<c:param name="targetId" value="updateDeductionVwM" />
 </c:import>

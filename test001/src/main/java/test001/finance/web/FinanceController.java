@@ -119,4 +119,40 @@ public class FinanceController {
 		return resultMap;
 	}
 	
+	@RequestMapping("/finance/popup/updateDeductionVwP.do")
+	public String updateDeductionVwP(@RequestParam Map<String, Object> params, ModelMap model) throws Exception {
+		model.addAttribute("params", params);
+		
+		// 카테고리 그룹 리스트 조회
+		model.addAttribute("cateGroupList", financeService.selectCateGroupList(params));
+		// 상세조회
+		model.addAttribute("deductionMap", financeService.selectDeductionMap(params));
+		return "test001/finance/popup/updateDeductionVwP.pop-layout1"; 
+	}
+	
+	@RequestMapping("/finance/modal/updateDeductionVwM.do")
+	public String updateDeductionVwM(@RequestParam Map<String, Object> params, ModelMap model) throws Exception {
+		model.addAttribute("params", params);
+		
+		// 카테고리 그룹 리스트 조회
+		model.addAttribute("cateGroupList", financeService.selectCateGroupList(params));
+		// 상세조회
+		model.addAttribute("deductionMap", financeService.selectDeductionMap(params));
+		return "test001/finance/modal/updateDeductionVwM"; 
+	}
+	
+	@ResponseBody
+	@RequestMapping("/finance/popup/updateDeduction.do")
+	public Map<String, Object> updateDeduction(@RequestParam Map<String, Object> params
+																	, ModelMap model) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		// Deduction 수정
+		if(financeService.updateDeduction(params) > 0) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
 }

@@ -11,4 +11,7 @@ public interface FinanceService {
 	
 	Map<String, Object> selectDeductionList(Map<String, Object> params) throws Exception;
 	
+	Map<String, Object> selectDeductionMap(Map<String, Object> params) throws Exception;
+	
+	int updateDeduction(Map<String, Object> params) throws Exception;
 }

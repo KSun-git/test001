@@ -32,4 +32,13 @@ public class FinanceDao {
 	public Map<String, Object> selectDeductionAmount(Map<String, Object> params) throws Exception {
 		return sqlSession.selectOne("FinanceDao_SQL.selectDeductionAmount", params);
 	}
+	
+	public Map<String, Object> selectDeductionMap(Map<String, Object> params) throws Exception {
+		return sqlSession.selectOne("FinanceDao_SQL.selectDeductionMap", params);
+	}
+	
+	public int updateDeduction(Map<String, Object> params) throws Exception {
+		return sqlSession.update("FinanceDao_SQL.updateDeduction", params);
+	}
+	
 }

@@ -34,5 +34,15 @@ public class FinanceServiceImpl implements FinanceService {
 		resultMap.put("deductionAmountMap", financeDao.selectDeductionAmount(params));
 		return resultMap;
 	}
+
+	@Override
+	public Map<String, Object> selectDeductionMap(Map<String, Object> params) throws Exception {
+		return financeDao.selectDeductionMap(params);
+	}
+
+	@Override
+	public int updateDeduction(Map<String, Object> params) throws Exception {
+		return financeDao.updateDeduction(params);
+	}
 	
 }

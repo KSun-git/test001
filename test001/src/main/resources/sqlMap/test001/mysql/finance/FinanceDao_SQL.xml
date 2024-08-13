@@ -29,7 +29,7 @@
 			, REPLACE(#{amount}, ',', '')
 			, #{bigo}
 			, REPLACE(#{deductionDe}, '-', '')
-			, #{regist_id}
+			, #{registId}
 			, DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
 		)
 		]]>
@@ -90,5 +90,40 @@
 			AND A.DEDUCTION_DE LIKE CONCAT(#{searchYYYYMM}, '%')
 		ORDER BY A.DEDUCTION_DE DESC
 	</select>
+	
+	<select id="selectDeductionMap" parameterType="hashMap" resultType="hashMap">
+		SELECT
+			A.NO
+			, A.GBN
+			, A.CATE
+			, A.AMOUNT
+			, FORMAT(A.AMOUNT, 0) AS AMOUNT_VW
+			, A.BIGO
+			, A.DEDUCTION_DE
+			, DATE_FORMAT(A.DEDUCTION_DE, '%Y-%m-%d') AS DEDUCTION_DE_VW
+			, A.REGIST_ID
+			, A.REGIST_DATE
+			, A.UPDT_ID
+			, A.UPDT_DATE
+		FROM
+			TBO_DEDUCTION_LIST A
+		WHERE 1=1
+			AND A.GBN = #{gbn}
+			AND A.NO = #{no}
+	</select>
+	
+	<update id="updateDeduction" parameterType="hashMap">
+		UPDATE TBO_DEDUCTION_LIST
+		SET
+			CATE = #{cate}
+			, AMOUNT = REPLACE(#{amount}, ',', '')
+			, BIGO = #{bigo}
+			, DEDUCTION_DE = REPLACE(#{deductionDe}, '-', '')
+			, UPDT_ID = #{updtId}
+			, UPDT_DATE = DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
+		WHERE 1=1
+			AND GBN = #{gbn}
+			AND NO = #{no}
+	</update>
 	
 </mapper>
