@@ -29,7 +29,7 @@ $(document).ready(function() {
 });
 
 function fn_registrPopup(){
-	if(confirm("regist deduction?")){
+	if(confirm("등록하시겠습니까?")){
 		var params = $("#popFrm").serialize();
 		$.ajax({
 			url: '/test001/finance/popup/insertDeduction.do',
@@ -40,10 +40,10 @@ function fn_registrPopup(){
 			async: false,
 			success: function(data){
 				if(data.result=="success"){
-					alert("complete registration");
+					alert("complete");
 					parent.location.reload(true);
 				} else{
-					alert("fail registration");
+					alert("fail");
 				}
 			},
 			error: function (request, status, error) {

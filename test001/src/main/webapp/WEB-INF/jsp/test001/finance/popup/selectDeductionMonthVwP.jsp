@@ -38,7 +38,7 @@ function fn_selectPopup(){
     	<div class="px-4">
     		<div class="row align-items-center justify-content-between pt-3">
     			<div class="col-auto mb-3">
-    				<h4 class="popup-header-title text-light">Select Configuration</h4>
+    				<h4 class="popup-header-title text-light">Select Month</h4>
     			</div>
     		</div>
     	</div>

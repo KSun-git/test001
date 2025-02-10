@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CalendarDao_SQL">
+	
+	<select id="selectCalendarSeq" parameterType="hashMap" resultType="Integer">
+		SELECT NEXTVAL('SEQ_CALENDAR')
+	</select>
+	
+	<update id="updateCalendarEvent" parameterType="test001.calendar.service.TboCalendarVO">
+		INSERT INTO TBO_CALENDAR(
+			FC_SEQ
+			,FC_USER
+			,FC_TITLE
+			,FC_START_DATE
+			,FC_END_DATE
+			,FC_ALLDAY
+			,FC_BG_COLOR
+			,FC_REGIST_DATE
+		) VALUES (
+			#{fcSeq}
+			,#{fcUser}
+			,#{fcTitle}
+			,#{fcStartDate}
+			,#{fcEndDate}
+			,#{fcAllday}
+			,#{fcBgColor}
+			,DATE_FORMAT(SYSDATE(), '%Y%m%d%H%i%s')
+		) ON DUPLICATE KEY UPDATE
+			FC_USER = #{fcUser}
+			,FC_TITLE = #{fcTitle}
+			,FC_START_DATE = #{fcStartDate}
+			,FC_END_DATE = #{fcEndDate}
+			,FC_ALLDAY = #{fcAllday}
+			,FC_BG_COLOR = #{fcBgColor}
+			,FC_UPDT_DATE = #{fcUpdtDate}
+	</update>
+	
+	<select id="selectCalendarEvent" parameterType="hashMap" resultType="hashMap">
+		SELECT
+			FC_SEQ
+			,FC_USER
+			,FC_TITLE
+			,FC_START_DATE
+			,FC_END_DATE
+			,FC_ALLDAY
+			,FC_BG_COLOR
+			,FC_REGIST_DATE
+			,DATE_FORMAT(STR_TO_DATE(FC_START_DATE, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i') AS FC_START_DATE_VW
+			,DATE_FORMAT(STR_TO_DATE(FC_START_DATE, '%Y%m%d%H%i%s'), '%Y-%m-%d') AS FC_START_DE_VW
+			,DATE_FORMAT(STR_TO_DATE(FC_START_DATE, '%Y%m%d%H%i%s'), '%H') AS FC_START_HOUR_VW
+			,DATE_FORMAT(STR_TO_DATE(FC_START_DATE, '%Y%m%d%H%i%s'), '%i') AS FC_START_MINUTE_VW
+			,DATE_FORMAT(STR_TO_DATE(FC_END_DATE, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i') AS FC_END_DATE_VW
+			,DATE_FORMAT(STR_TO_DATE(FC_END_DATE, '%Y%m%d%H%i%s'), '%Y-%m-%d') AS FC_END_DE_VW
+			,DATE_FORMAT(STR_TO_DATE(FC_END_DATE, '%Y%m%d%H%i%s'), '%H') AS FC_END_HOUR_VW
+			,DATE_FORMAT(STR_TO_DATE(FC_END_DATE, '%Y%m%d%H%i%s'), '%i') AS FC_END_MINUTE_VW
+		FROM
+			TBO_CALENDAR A
+		WHERE
+			A.FC_SEQ = #{seqNo}
+	</select>
+	
+	<select id="selectCalendarEventAll" parameterType="hashMap" resultType="hashMap">
+		SELECT
+			FC_SEQ
+			,FC_USER
+			,FC_TITLE
+			,FC_START_DATE
+			,FC_END_DATE
+			,FC_ALLDAY
+			,FC_BG_COLOR
+			,FC_REGIST_DATE
+			,DATE_FORMAT(STR_TO_DATE(FC_START_DATE, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i') AS FC_START_DATE_VW
+			,DATE_FORMAT(STR_TO_DATE(FC_END_DATE, '%Y%m%d%H%i%s'), '%Y-%m-%d %H:%i') AS FC_END_DATE_VW
+		FROM
+			TBO_CALENDAR A
+		WHERE
+			<![CDATA[
+			(A.FC_START_DATE >= #{start} AND A.FC_START_DATE < #{end})
+			OR
+			(A.FC_END_DATE >= #{start} AND A.FC_END_DATE < #{end})
+			]]>
+	</select>
+	
+	<delete id="deleteCalendarEvent" parameterType="test001.calendar.service.TboCalendarVO">
+		DELETE FROM TBO_CALENDAR
+		WHERE FC_SEQ = #{fcSeq}
+	</delete>
+	
+</mapper>

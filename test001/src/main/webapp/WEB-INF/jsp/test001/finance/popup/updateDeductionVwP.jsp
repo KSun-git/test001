@@ -8,7 +8,7 @@ function fn_closePopup(){
 }
 
 function fn_editPopup(){
-	if(confirm("edit deduction?")){
+	if(confirm("수정 하시겠습니까?")){
 		var params = $("#popFrm").serialize();
 		$.ajax({
 			url: '/test001/finance/popup/updateDeduction.do',
@@ -39,7 +39,7 @@ function fn_editPopup(){
     	<div class="px-4">
     		<div class="row align-items-center justify-content-between pt-3">
     			<div class="col-auto mb-3">
-    				<h4 class="popup-header-title text-light">Edit Deduction</h4>
+    				<h4 class="popup-header-title text-light">Edit</h4>
     			</div>
     		</div>
     	</div>

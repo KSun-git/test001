@@ -204,7 +204,7 @@ function fn_selectDeductionMonth(yyyymm){
 <script src="/vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page Heading -->
-<h3 class="mb-0 mt-5 text-gray-800">300,000-Deduction</h3>
+<h3 class="mb-0 mt-5 text-gray-800">f300,000</h3>
 <hr class="mt-2 mb-4">
 
 <!-- searchFrm -->
@@ -313,7 +313,7 @@ function fn_selectDeductionMonth(yyyymm){
 	<div class="col-lg-8 mb-8">
 		<div class="card shadow mb-4 border-left-secondary">
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">Deduction List</h6>
+				<h6 class="m-0 font-weight-bold text-primary">List</h6>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -325,7 +325,7 @@ function fn_selectDeductionMonth(yyyymm){
 										<th>NO</th>
 										<th>Category</th>
 										<th>Amount</th>
-										<th>Deduction Day</th>
+										<th>Date</th>
 										<th>Bigo</th>
 									</tr>
 								</thead>
@@ -383,7 +383,7 @@ function fn_selectDeductionMonth(yyyymm){
 	<div class="col-lg-4 mb-4">
 		<div class="card shadow border-left-secondary shadow">
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">Deduction Stat</h6>
+				<h6 class="m-0 font-weight-bold text-primary">Stat</h6>
 			</div>
 			<div class="card-body">
 				 <div class="chart-pie pt-4 pb-2">

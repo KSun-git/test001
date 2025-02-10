@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+/*header-toolbar*/
+.fc .fc-header-toolbar .fc-toolbar-chunk{display: flex;align-items: center;}
+.fc .fc-header-toolbar .fc-dayGridMonth-button:not(.fc-button-active){background-color: var(--fc-button-bg-color);border-color: var(--fc-button-border-color);color: var(--fc-button-text-color);opacity: 0.65;}
+.fc .fc-header-toolbar .fc-timeGridWeek-button:not(.fc-button-active){background-color: var(--fc-button-bg-color);border-color: var(--fc-button-border-color);color: var(--fc-button-text-color);opacity: 0.65;}
+.fc .fc-header-toolbar .fc-timeGridDay-button:not(.fc-button-active){background-color: var(--fc-button-bg-color);border-color: var(--fc-button-border-color);color: var(--fc-button-text-color);opacity: 0.65;}
+.fc .fc-header-toolbar .fc-listWeek-button:not(.fc-button-active){background-color: var(--fc-button-bg-color);border-color: var(--fc-button-border-color);color: var(--fc-button-text-color);opacity: 0.65;}
+.fc .fc-header-toolbar .fc-toolbar-title{color:black;}
+
+/*week*/
+.fc .fc-day-sun a{color:red;}
+.fc .fc-day-sat a{color:blue;}
+.fc .fc-day-mon a,
+.fc .fc-day-tue a,
+.fc .fc-day-wed a,
+.fc .fc-day-thu a,
+.fc .fc-day-fri a{color:black;}
+
+/*holiday*/
+.fc .fc-event.ko-holiday{background-color:rgba(255, 77, 77, 0.3);opacity:1;}
+.fc .fc-event.ko-holiday .fc-event-title{color:rgba(255, 0, 0, 0.7);}
+
+/*my-schedule*/
+.fc .fc-event.my-schedule:hover{cursor:pointer;}

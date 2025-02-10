@@ -11,7 +11,7 @@ function fn_closePopup(){
 }
 
 function fn_registrPopup(){
-	if(confirm("regist deduction?")){
+	if(confirm("등록 하시겠습니까?")){
 		var params = $("#popFrm").serialize();
 		$.ajax({
 			url: '/test001/finance/popup/insertDeduction.do',
@@ -22,10 +22,10 @@ function fn_registrPopup(){
 			async: false,
 			success: function(data){
 				if(data.result=="success"){
-					alert("complete registration");
+					alert("complete");
 					parent.location.reload(true);
 				} else{
-					alert("fail registration");
+					alert("fail");
 				}
 			},
 			error: function (request, status, error) {
@@ -42,7 +42,7 @@ function fn_registrPopup(){
     	<div class="px-4">
     		<div class="row align-items-center justify-content-between pt-3">
     			<div class="col-auto mb-3">
-    				<h4 class="popup-header-title text-light">Registration Deduction</h4>
+    				<h4 class="popup-header-title text-light">Registration</h4>
     			</div>
     		</div>
     	</div>

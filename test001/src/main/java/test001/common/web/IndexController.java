@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import test001.common.service.IndexService;
 
+@RequestMapping("/test001")
 @Controller
 public class IndexController {
 	
@@ -21,15 +22,14 @@ public class IndexController {
 	@Resource(name="indexService")
 	IndexService indexService;
 	
-	@RequestMapping("/test001/index.do")
+	@RequestMapping("/index.do")
 	public String indexPage(ModelMap model) throws Exception {
 		String sysdate = indexService.selectSysdate();
-		LOGGER.info("index.do" + sysdate);
 		model.put("sysdate", sysdate);
 		return "test001/main.layout1"; 
 	}
 	
-	@RequestMapping("/test001/layoutModal.do")
+	@RequestMapping("/layoutModal.do")
 	public String layoutModal(@RequestParam(required = true) String targetId
 							,ModelMap model) throws Exception {
 		
@@ -37,7 +37,7 @@ public class IndexController {
 		return "common/include/layoutModal";
 	}
 	
-	@RequestMapping("/test001/sampleModal.do")
+	@RequestMapping("/sampleModal.do")
 	public String sampleModalVwM(@RequestParam Map<String, Object> params, ModelMap model) throws Exception {
 		model.put("params", params);
 		return "test001/sampleModal";

@@ -26,7 +26,7 @@ $(document).ready(function() {
 });
 
 function fn_editPopup(){
-	if(confirm("edit deduction?")){
+	if(confirm("수정 하시겠습니까?")){
 		var params = $("#popFrm").serialize();
 		$.ajax({
 			url: '/test001/finance/popup/updateDeduction.do',

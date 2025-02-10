@@ -88,7 +88,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">Finance Management:</h6>
 				<a class="collapse-item" href="/test001/finance/FixedExpenses.do" data-smallcate="01">Fixed Expenses</a>
-				<a class="collapse-item" href="/test001/finance/f300000Deduction.do" data-smallcate="02">300,000 Deduction</a>
+				<a class="collapse-item" href="/test001/finance/f300000Deduction.do" data-smallcate="02">f300,000</a>
 			</div>
 		</div>
 	</li>
