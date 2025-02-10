@@ -16,3 +16,7 @@
 
 <!-- Common css -->
 <link rel="stylesheet" href="/css/CommCss.css">
+
+<!-- dayjs v1.11.13 -->
+<script src="/plugin/dayjs-1.11.13/dayjs.min.js"></script>
+<script src="/plugin/dayjs-1.11.13/locale/ko.js"></script>
