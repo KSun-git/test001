@@ -23,3 +23,6 @@
 
 /*my-schedule*/
 .fc .fc-event.my-schedule:hover{cursor:pointer;}
+
+/*daGridMonth time hidden*/
+.fc .fc-dayGridMonth-view .fc-event .fc-event-time{display:none;}

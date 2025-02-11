@@ -66,6 +66,7 @@ function fn_renderCalendar(){
 			center: 'title',
 			end: 'dayGridMonth,timeGridWeek,listWeek'
 		},
+		
 		initialView: iniView,	//기본설정(달)
 		navLinks: true,	//날짜선택가능
 		navLinkDayClick: "timeGridWeek", //날짜선택시띄울것
@@ -345,8 +346,8 @@ function fn_deleteCalendarEvent(event){
 }
 </script>
 <!-- Page Heading -->
-<form name="frm" id="frm" method="post" action="">
-	<div id='calendar'></div>
+<form name="frm" id="frm" method="post" action="" style="overflow:auto;">
+	<div id='calendar' style="min-width:600px;"></div>
 </form>
 
 <%@ include file="/WEB-INF/jsp/test001/calendar/modal/insertFullcalendarVwM.jsp" %>
